@@ -1,0 +1,217 @@
+[
+  {
+    "outbound": "2026-09-05",
+    "return": "2026-09-27",
+    "cheapest": {
+      "price": 1024,
+      "details": "1:10 PM |  –  | 8:10 PM+1 | Korean Air | 19 hr | JFK–PVG | 1 stop | 1 hr 5 min ICN | 1,031 kg CO2e | +10% emissions | $1,024 | round trip"
+    },
+    "cx843": {
+      "price": 1253,
+      "details": "1:55 AM |  –  | 12:05 PM+1 | Cathay Pacific | 22 hr 10 min | JFK–PVG | 1 stop | 3 hr 50 min HKG | 1,013 kg CO2e | +8% emissions | $1,253 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 368"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-09-12",
+    "return": "2026-10-04",
+    "cheapest": {
+      "price": 1053,
+      "details": "2:55 PM |  –  | 11:55 PM+1 | Cathay Pacific | 21 hr | JFK–PVG | 1 stop | 2 hr HKG | 1,194 kg CO2e | +27% emissions | $1,053 | round trip"
+    },
+    "cx843": {
+      "price": 1203,
+      "details": "1:55 AM |  –  | 12:05 PM+1 | Cathay Pacific | 22 hr 10 min | JFK–PVG | 1 stop | 3 hr 50 min HKG | 1,013 kg CO2e | +8% emissions | $1,203 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 368"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-09-19",
+    "return": "2026-10-11",
+    "cheapest": {
+      "price": 1053,
+      "details": "2:55 PM |  –  | 11:55 PM+1 | Cathay Pacific | 21 hr | JFK–PVG | 1 stop | 2 hr HKG | 1,194 kg CO2e | +27% emissions | $1,053 | round trip"
+    },
+    "cx843": {
+      "price": 1203,
+      "details": "1:55 AM |  –  | 11:05 AM+1 | Cathay Pacific | 21 hr 10 min | JFK–PVG | 1 stop | 2 hr 40 min HKG | 1,024 kg CO2e | +9% emissions | $1,203 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 316"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-09-26",
+    "return": "2026-10-18",
+    "cheapest": {
+      "price": 1024,
+      "details": "1:10 PM |  –  | 8:10 PM+1 | Korean Air | 19 hr | JFK–PVG | 1 stop | 1 hr 5 min ICN | 1,031 kg CO2e | +10% emissions | $1,024 | round trip"
+    },
+    "cx843": {
+      "price": 1203,
+      "details": "1:55 AM |  –  | 11:05 AM+1 | Cathay Pacific | 21 hr 10 min | JFK–PVG | 1 stop | 2 hr 40 min HKG | 1,024 kg CO2e | +9% emissions | $1,203 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 316"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-10-03",
+    "return": "2026-10-25",
+    "cheapest": {
+      "price": 1128,
+      "details": "2:55 PM |  –  | 11:55 PM+1 | Cathay Pacific | 21 hr | JFK–PVG | 1 stop | 2 hr HKG | 1,104 kg CO2e | +17% emissions | $1,128 | round trip"
+    },
+    "cx843": {
+      "price": 1278,
+      "details": "1:55 AM |  –  | 11:05 AM+1 | Cathay Pacific | 21 hr 10 min | JFK–PVG | 1 stop | 2 hr 40 min HKG | 950 kg CO2e | Avg emissions | $1,278 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 316"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-10-10",
+    "return": "2026-11-01",
+    "cheapest": {
+      "price": 1203,
+      "details": "2:55 PM |  –  | 11:55 PM+1 | Cathay Pacific | 21 hr | JFK–PVG | 1 stop | 2 hr HKG | 1,104 kg CO2e | +17% emissions | $1,203 | round trip"
+    },
+    "cx843": {
+      "price": 1427,
+      "details": "1:55 AM |  –  | 1:15 PM+1 | Cathay Pacific | 23 hr 20 min | JFK–PVG | 1 stop | 4 hr 55 min HKG | 937 kg CO2e | Avg emissions | $1,427 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 376"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-10-17",
+    "return": "2026-11-08",
+    "cheapest": {
+      "price": 1203,
+      "details": "2:55 PM |  –  | 11:55 PM+1 | Cathay Pacific | 21 hr | JFK–PVG | 1 stop | 2 hr HKG | 1,104 kg CO2e | +17% emissions | $1,203 | round trip"
+    },
+    "cx843": {
+      "price": 1278,
+      "details": "1:55 AM |  –  | 1:15 PM+1 | Cathay Pacific | 23 hr 20 min | JFK–PVG | 1 stop | 4 hr 55 min HKG | 937 kg CO2e | Avg emissions | $1,278 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 376"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-10-24",
+    "return": "2026-11-15",
+    "cheapest": {
+      "price": 1156,
+      "details": "11:45 AM |  –  | 9:05 PM+1 | Asiana Airlines | 21 hr 20 min | JFK–PVG | 1 stop | 3 hr 30 min ICN | 987 kg CO2e | Avg emissions | $1,156 | round trip"
+    },
+    "cx843": {
+      "price": 1427,
+      "details": "1:55 AM | – | 5:30 AM+1 | Cathay Pacific | 15 hr 35 min overnight | JFK–HKG | 1 stop | Airbus A350 | CX 843",
+      "flightNums": [
+        "CX 843"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-10-31",
+    "return": "2026-11-22",
+    "cheapest": {
+      "price": 1156,
+      "details": "11:15 AM |  –  | 9:05 PM+1 | Asiana Airlines | 21 hr 50 min | JFK–PVG | 1 stop | 3 hr 50 min ICN | 987 kg CO2e | Avg emissions | $1,156 | round trip"
+    },
+    "cx843": null
+  },
+  {
+    "outbound": "2026-11-07",
+    "return": "2026-11-29",
+    "cheapest": {
+      "price": 1128,
+      "details": "1:40 PM |  –  | 11:55 PM+1 | Cathay Pacific | 21 hr 15 min | JFK–PVG | 1 stop | 2 hr 10 min HKG | 956 kg CO2e | Avg emissions | $1,128 | round trip"
+    },
+    "cx843": null
+  },
+  {
+    "outbound": "2026-11-14",
+    "return": "2026-12-06",
+    "cheapest": {
+      "price": 1128,
+      "details": "1:40 PM |  –  | 4:15 PM+2 | Cathay Pacific | 37 hr 35 min | JFK–PVG | 1 stop | 18 hr 30 min HKG | 956 kg CO2e | Avg emissions | $1,128 | round trip"
+    },
+    "cx843": null
+  },
+  {
+    "outbound": "2026-11-21",
+    "return": "2026-12-13",
+    "cheapest": {
+      "price": 1099,
+      "details": "12:00 PM |  –  | 8:25 PM+1 | Korean Air | 19 hr 25 min | JFK–PVG | 1 stop | 1 hr 15 min ICN | 1,067 kg CO2e | +13% emissions | $1,099 | round trip"
+    },
+    "cx843": null
+  },
+  {
+    "outbound": "2026-11-28",
+    "return": "2026-12-20",
+    "cheapest": {
+      "price": 1099,
+      "details": "12:50 AM |  –  | 9:45 AM+1 | Korean Air | 19 hr 55 min | JFK–PVG | 1 stop | 1 hr 55 min ICN | 1,067 kg CO2e | +13% emissions | $1,099 | round trip"
+    },
+    "cx843": null
+  },
+  {
+    "outbound": "2026-12-05",
+    "return": "2026-12-27",
+    "cheapest": {
+      "price": 1203,
+      "details": "1:40 PM |  –  | 11:55 PM+1 | Cathay Pacific | 21 hr 15 min | JFK–PVG | 1 stop | 2 hr 10 min HKG | 969 kg CO2e | Avg emissions | $1,203 | round trip"
+    },
+    "cx843": null
+  },
+  {
+    "outbound": "2026-12-12",
+    "return": "2027-01-03",
+    "cheapest": {
+      "price": 1771,
+      "details": "7:00 AM |  –  | 9:05 PM+1 | Alaska, Asiana Airlines | 25 hr 5 min | JFK–PVG | 2 stops | SEA, ICN | 981 kg CO2e | Avg emissions | $1,771 | round trip"
+    },
+    "cx843": null
+  },
+  {
+    "outbound": "2026-12-19",
+    "return": "2027-01-10",
+    "cheapest": {
+      "price": 1750,
+      "details": "10:45 PM |  –  | 6:55 PM+2 | Finnair | 31 hr 10 min | JFK–PVG | 1 stop | 10 hr 45 min HEL | 953 kg CO2e | Avg emissions | $1,750 | round trip"
+    },
+    "cx843": null
+  },
+  {
+    "outbound": "2026-12-26",
+    "return": "2027-01-17",
+    "cheapest": {
+      "price": 1280,
+      "details": "7:29 PM |  –  | 4:10 PM+2 | American | 31 hr 41 min | JFK–PVG | 2 stops | CLT, DFW | 998 kg CO2e | +6% emissions | $1,280 | round trip"
+    },
+    "cx843": {
+      "price": 1601,
+      "details": "1:45 AM |  –  | 11:35 AM+1 | Cathay Pacific | 20 hr 50 min | JFK–PVG | 1 stop | 2 hr 20 min HKG | 971 kg CO2e | Avg emissions | $1,601 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 316"
+      ]
+    }
+  }
+]
