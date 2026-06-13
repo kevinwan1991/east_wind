@@ -27,16 +27,12 @@ Uses Playwright to scrape **Google Flights** (google.com/travel/flights) for Cat
 ```
 east-wind/
 ├── scraper/
-│   ├── browser.js      # Playwright browser/context setup
-│   ├── dates.js        # Saturday date generator
-│   └── extractor.js    # Page scraping logic
-├── server/
-│   └── index.js        # Express API
-├── portal/
-│   ├── index.html
-│   └── app.js          # Frontend filter/sort logic
+│   ├── google.js       # Google Flights scraper (primary — confirms CX843 flight number)
+│   └── cathay.js       # Cathay Pacific histogram API scraper (price-only fallback)
 ├── data/
-│   └── flights.json    # Scraper output
+│   └── flights.json    # Scraper output (17 Saturday date pairs, Sep–Dec 2026)
+├── cookies/
+│   └── google.json     # Google session cookies (not committed — export fresh before each run)
 ├── .env                # Config (not committed)
 ├── package.json
 └── CLAUDE.md
@@ -46,28 +42,47 @@ east-wind/
 
 - **ES modules throughout** — always `import`/`export`, never `require()`
 - **async/await** — no raw Promise chains
-- **Modular scraper** — browser setup, date logic, and extraction live in separate files; `scraper/index.js` orchestrates them
 - **No TypeScript** — plain JS only
-- **Config via `.env`** — at minimum: `TRAVEL_WINDOW_START`, `TRAVEL_WINDOW_END`, `HEADLESS` (true/false), `PORT`
+- **Trip length:** 22 days (depart Saturday, return 22 days later)
+- **Date range:** All Saturdays Sep 5 – Dec 26 2026
 
-## .env shape
-
-```
-TRAVEL_WINDOW_END=2026-12-31
-HEADLESS=true
-PORT=3000
-```
-
-## Current status
-
-Project not yet initialized — start from scratch. No `package.json`, no `node_modules`, no source files yet.
-
-## Running the project
+## Running the scraper
 
 ```bash
-# Scrape flights
-node scraper/index.js
+# Full scan (all Saturdays)
+HEADLESS=false node scraper/google.js
 
-# Start portal
-node server/index.js
+# Single date
+HEADLESS=false FROM_DATE=2026-11-07 TO_DATE=2026-11-07 node scraper/google.js
 ```
+
+`HEADLESS=false` is required — Google detects headless mode and blocks results.
+
+## Google Flights bot detection — lessons learned
+
+Google Flights has progressively tightened anti-bot measures. Here's what we know:
+
+### What works
+- **Cookie injection** is the most important technique. Google now requires sign-in to show flight results. Injecting a real logged-in Google session bypasses the sign-in wall entirely.
+- **Cathay Pacific "Only" filter** applied before expanding rows reduces the scan set from ~22 rows to ~6, making CX843 detection much faster and less likely to trigger rate limits.
+- **Real Chrome** (`channel: 'chrome'`) + stealth plugin + `navigator.webdriver` removal helps avoid fingerprinting.
+- **Human-like behavior** — `humanClick()` (mouse.move before click), `humanType()` (char-by-char), randomized delays, warmup visit to google.com before flights.
+- **Fresh browser context per search** — resets cookies/storage so Google can't track across searches.
+
+### Cookie workflow
+1. In your real Chrome (signed into Google), go to `google.com/travel/flights`
+2. Click the **Cookie-Editor** extension → **Export** → **Export as JSON**
+3. Save to `cookies/google.json` (already in `.gitignore`)
+4. Run the scraper — it auto-loads cookies on startup
+
+### Cookies rotate
+Google refreshes session tokens (`__Secure-1PSIDTS`, `__Secure-3PSIDTS`, etc.) after scraping activity. If the Playwright browser appears signed out, re-export cookies and rerun. Takes ~30 seconds.
+
+### Destination input selector
+Google Flights uses `input[aria-label*="where to" i]` — not the exact string `"Where to?"`. The scraper tries multiple fallback selectors.
+
+### What doesn't work
+- Headless mode — blocked immediately
+- `launchPersistentContext` with real Chrome profile — Chrome blocks CDP when using the default user data dir
+- Automated Google sign-in — Google detects Playwright flags and shows "Couldn't sign you in"
+- CDP remote debugging port — macOS sandbox prevents port binding when launched from a shell
