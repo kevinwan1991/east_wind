@@ -40,7 +40,7 @@ function loadCookies() {
 }
 
 refreshCookies();
-const SAVED_COOKIES = loadCookies();
+let SAVED_COOKIES = loadCookies();
 if (SAVED_COOKIES.length > 0) console.log(`[cookies] loaded ${SAVED_COOKIES.length} cookies from ${COOKIE_FILE}`);
 
 chromium.use(StealthPlugin());
@@ -79,6 +79,19 @@ async function humanType(page, text) {
 async function scrollInto(locator) {
   await locator.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
   await wait(300);
+}
+
+// ── Sign-in wall detection ────────────────────────────────────────────────────
+
+class SignInWallError extends Error {
+  constructor() { super('sign-in wall detected'); this.name = 'SignInWallError'; }
+}
+
+async function isSignedOut(page) {
+  const url = page.url();
+  if (url.includes('accounts.google.com') || url.includes('ServiceLogin')) return true;
+  const signInBtn = page.locator('a, button').filter({ hasText: /^Sign in$/i }).first();
+  return await signInBtn.isVisible({ timeout: 1000 }).catch(() => false);
 }
 
 // ── Date pairs ────────────────────────────────────────────────────────────────
@@ -293,6 +306,7 @@ async function runSearch(page, outbound, returnDate) {
   if (_diagCount === 0) {
     await page.screenshot({ path: `data/diag_${outbound}.png`, fullPage: false }).catch(() => {});
     console.log(`  [diag] screenshot saved to data/diag_${outbound}.png`);
+    if (await isSignedOut(page)) throw new SignInWallError();
   }
 
   // Scroll down naturally before reading results
@@ -354,7 +368,7 @@ console.log(`Scanning ${pairs.length} Saturday pairs ${FROM} → ${TO} (${TRIP_D
 
 const HEADLESS = process.env.HEADLESS !== 'false' ? true : false;
 const browser = await chromium.launch({
-  channel:  'chrome',   // real Chrome, not bundled Chromium
+  channel:  'chrome',
   headless: HEADLESS,
   args: [
     '--lang=en-US',
@@ -364,7 +378,6 @@ const browser = await chromium.launch({
   ],
 });
 
-// Viewport sizes to rotate through so each session looks slightly different
 const VIEWPORTS = [
   { width: 1280, height: 900 },
   { width: 1440, height: 900 },
@@ -372,63 +385,89 @@ const VIEWPORTS = [
   { width: 1280, height: 800 },
 ];
 
-// Load existing results if available, merge new ones in
+async function makeContext(index) {
+  const ctx = await browser.newContext({
+    locale:     'en-US',
+    timezoneId: 'America/New_York',
+    userAgent:  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    viewport:   VIEWPORTS[index % VIEWPORTS.length],
+    extraHTTPHeaders: {
+      'Accept-Language': 'en-US,en;q=0.9',
+      'Accept':          'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    },
+  });
+  await ctx.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+  });
+  if (SAVED_COOKIES.length > 0) await ctx.addCookies(SAVED_COOKIES);
+  return ctx;
+}
+
+const SIGNIN_WAIT_MS = 5 * 60 * 1000; // 5 minutes
+
 const outFile = 'data/flights.json';
 const results = existsSync(outFile) ? JSON.parse(readFileSync(outFile, 'utf8')) : [];
 
 for (let i = 0; i < pairs.length; i++) {
   const { outbound, return: ret } = pairs[i];
 
-  // Fresh context + page for every search — resets cookies, session storage,
-  // and browser fingerprint so Google can't track across searches
-  const context = await browser.newContext({
-    locale:     'en-US',
-    timezoneId: 'America/New_York',
-    userAgent:  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-    viewport:   VIEWPORTS[i % VIEWPORTS.length],
-    extraHTTPHeaders: {
-      'Accept-Language': 'en-US,en;q=0.9',
-      'Accept':          'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-    },
-  });
-
-  // Remove navigator.webdriver explicitly (stealth also does this, belt-and-suspenders)
-  await context.addInitScript(() => {
-    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-  });
-
-  if (SAVED_COOKIES.length > 0) {
-    await context.addCookies(SAVED_COOKIES);
-  }
-
-  const page = await context.newPage();
-
-  // Human-paced inter-search pause (45–90 seconds) after the first search
   if (i > 0) {
     const delay = 45000 + Math.random() * 45000;
     console.log(`  [pause] waiting ${Math.round(delay / 1000)}s before next search…`);
     await wait(delay);
   }
 
-  try {
-    const data = await runSearch(page, outbound, ret);
-    const idx = results.findIndex(r => r.outbound === outbound);
-    const prev = idx >= 0 ? results[idx] : null;
-    const entry = {
-      outbound, return: ret,
-      cheapest: data.cheapest ?? prev?.cheapest ?? null,
-      cx843:    data.cx843    ?? prev?.cx843    ?? null,
-    };
-    if (idx >= 0) results[idx] = entry; else results.push(entry);
+  let context = await makeContext(i);
+  let page    = await context.newPage();
 
-    const cheapStr = entry.cheapest ? `$${entry.cheapest.price.toLocaleString()}` : 'n/a';
-    const cx843Str = entry.cx843    ? `$${entry.cx843.price?.toLocaleString()}`   : '—';
-    console.log(`[${i + 1}/${pairs.length}] ${outbound} → ${ret}   cheapest ${cheapStr}   CX843 ${cx843Str}`);
+  let data;
+  try {
+    data = await runSearch(page, outbound, ret);
   } catch (err) {
-    console.error(`[${i + 1}/${pairs.length}] ${outbound} ERROR: ${err.message.slice(0, 80)}`);
-    const idx = results.findIndex(r => r.outbound === outbound);
-    if (idx < 0) results.push({ outbound, return: ret, cheapest: null, cx843: null, error: err.message });
+    if (err instanceof SignInWallError) {
+      await context.close();
+      console.log(`  [auth] sign-in wall detected — waiting 5 min before refreshing cookies…`);
+      for (let m = 1; m <= 5; m++) {
+        await new Promise(r => setTimeout(r, SIGNIN_WAIT_MS / 5 + (Math.random() * 15000 - 7500)));
+        console.log(`  [auth] ${m}/5 min elapsed…`);
+      }
+      refreshCookies();
+      SAVED_COOKIES = loadCookies();
+      console.log(`  [auth] refreshed ${SAVED_COOKIES.length} cookies — retrying ${outbound}…`);
+      context = await makeContext(i);
+      page    = await context.newPage();
+      try {
+        data = await runSearch(page, outbound, ret);
+      } catch (retryErr) {
+        console.error(`[${i + 1}/${pairs.length}] ${outbound} RETRY ERROR: ${retryErr.message.slice(0, 80)}`);
+        const idx = results.findIndex(r => r.outbound === outbound);
+        if (idx < 0) results.push({ outbound, return: ret, cheapest: null, cx843: null, error: retryErr.message });
+        await context.close();
+        writeFileSync(outFile, JSON.stringify(results, null, 2));
+        continue;
+      }
+    } else {
+      console.error(`[${i + 1}/${pairs.length}] ${outbound} ERROR: ${err.message.slice(0, 80)}`);
+      const idx = results.findIndex(r => r.outbound === outbound);
+      if (idx < 0) results.push({ outbound, return: ret, cheapest: null, cx843: null, error: err.message });
+      await context.close();
+      writeFileSync(outFile, JSON.stringify(results, null, 2));
+      continue;
+    }
   }
+
+  const idx = results.findIndex(r => r.outbound === outbound);
+  const prev = idx >= 0 ? results[idx] : null;
+  const entry = {
+    outbound, return: ret,
+    cheapest: data.cheapest ?? prev?.cheapest ?? null,
+    cx843:    data.cx843    ?? prev?.cx843    ?? null,
+  };
+  if (idx >= 0) results[idx] = entry; else results.push(entry);
+
+  const cheapStr = entry.cheapest ? `$${entry.cheapest.price.toLocaleString()}` : 'n/a';
+  const cx843Str = entry.cx843    ? `$${entry.cx843.price?.toLocaleString()}`   : '—';
+  console.log(`[${i + 1}/${pairs.length}] ${outbound} → ${ret}   cheapest ${cheapStr}   CX843 ${cx843Str}`);
 
   await context.close();
   writeFileSync(outFile, JSON.stringify(results, null, 2));
