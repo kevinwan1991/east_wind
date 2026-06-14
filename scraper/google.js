@@ -2,10 +2,19 @@ import 'dotenv/config';
 import { chromium } from 'playwright-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { writeFileSync, readFileSync, existsSync } from 'fs';
+import { execSync } from 'child_process';
 
 // ── Cookie injection ──────────────────────────────────────────────────────────
 
 const COOKIE_FILE = 'cookies/google.json';
+
+function refreshCookies() {
+  try {
+    execSync('python3 scraper/refresh_cookies.py', { stdio: 'inherit' });
+  } catch (e) {
+    console.warn('  [cookies] auto-refresh failed:', e.message);
+  }
+}
 
 function loadCookies() {
   if (!existsSync(COOKIE_FILE)) return [];
@@ -30,6 +39,7 @@ function loadCookies() {
   }
 }
 
+refreshCookies();
 const SAVED_COOKIES = loadCookies();
 if (SAVED_COOKIES.length > 0) console.log(`[cookies] loaded ${SAVED_COOKIES.length} cookies from ${COOKIE_FILE}`);
 
