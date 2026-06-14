@@ -269,5 +269,149 @@
         "CX 316"
       ]
     }
+  },
+  {
+    "outbound": "2026-07-04",
+    "return": "2026-07-26",
+    "cheapest": {
+      "price": 1555,
+      "details": "4:25 PM |  –  | 7:15 AM+2 | Condor, China Eastern | 26 hr 50 min | JFK–PVG | 1 stop | 8 hr 20 min FRA | 969 kg CO2e | Avg emissions | $1,555 | round trip"
+    },
+    "cx843": {
+      "price": 2985,
+      "details": "1:55 AM |  –  | 11:05 AM+1 | Cathay Pacific | 21 hr 10 min | JFK–PVG | 1 stop | 2 hr 40 min HKG | 1,016 kg CO2e | +8% emissions | $2,985 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 316"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-07-11",
+    "return": "2026-08-02",
+    "cheapest": {
+      "price": 1571,
+      "details": "11:20 AM |  –  | 10:35 PM+1 | Qatar AirwaysJetBlue | 23 hr 15 min | JFK–PVG | 1 stop | 1 hr 45 min DOH | 1,247 kg CO2e | +33% emissions | $1,571 | round trip"
+    },
+    "cx843": {
+      "price": 2274,
+      "details": "1:55 AM |  –  | 11:05 AM+1 | Cathay Pacific | 21 hr 10 min | JFK–PVG | 1 stop | 2 hr 40 min HKG | 1,016 kg CO2e | +8% emissions | $2,274 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 316"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-07-18",
+    "return": "2026-08-09",
+    "cheapest": {
+      "price": 1505,
+      "details": "11:20 AM |  –  | 10:20 PM+1 | Emirates | 23 hr | JFK–PVG | 1 stop | 1 hr 10 min DXB | 1,399 kg CO2e | +49% emissions | $1,505 | round trip"
+    },
+    "cx843": {
+      "price": 2100,
+      "details": "1:55 AM |  –  | 12:05 PM+1 | Cathay Pacific | 22 hr 10 min | JFK–SHA | 1 stop | 4 hr 5 min HKG | 1,002 kg CO2e | +6% emissions | $2,100 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 342"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-07-25",
+    "return": "2026-08-16",
+    "cheapest": {
+      "price": 1486,
+      "details": "11:00 PM |  –  | 3:30 PM+2 | Emirates | 28 hr 30 min | JFK–PVG | 1 stop | 6 hr 40 min DXB | 1,399 kg CO2e | +49% emissions | $1,486 | round trip"
+    },
+    "cx843": {
+      "price": 2785,
+      "details": "1:55 AM |  –  | 1:15 PM+1 | Cathay Pacific | 23 hr 20 min | JFK–PVG | 1 stop | 4 hr 55 min HKG | 993 kg CO2e | +6% emissions | $2,785 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 376"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-08-01",
+    "return": "2026-08-23",
+    "cheapest": {
+      "price": 1540,
+      "details": "10:00 AM |  –  | 7:15 AM+2 | JetBlue, Condor, China Eastern | 33 hr 15 min | JFK–PVG | 2 stops | BOS, FRA | 1,137 kg CO2e | +21% emissions | $1,540 | round trip"
+    },
+    "cx843": {
+      "price": 3662,
+      "details": "1:55 AM |  –  | 12:05 PM+1 | Cathay Pacific | 22 hr 10 min | JFK–SHA | 1 stop | 4 hr 5 min HKG | 1,045 kg CO2e | +11% emissions | $3,662 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 342"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-08-08",
+    "return": "2026-08-30",
+    "cheapest": {
+      "price": 1233,
+      "details": "10:30 PM |  –  | 3:20 PM+2 | AmericanOperated by Republic Airways as American Eagle | 28 hr 50 min | JFK–PVG | 2 stops | BOS, DFW | 1,071 kg CO2e | +14% emissions | $1,233 | round trip"
+    },
+    "cx843": {
+      "price": 2785,
+      "details": "1:55 AM |  –  | 12:05 PM+1 | Cathay Pacific | 22 hr 10 min | JFK–SHA | 1 stop | 4 hr 5 min HKG | 1,045 kg CO2e | +11% emissions | $2,785 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 342"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-08-15",
+    "return": "2026-09-06",
+    "cheapest": {
+      "price": 1233,
+      "details": "9:00 PM |  –  | 3:20 PM+2 | AmericanOperated by Republic Airways as American Eagle | 30 hr 20 min | JFK–PVG | 2 stops | DCA, DFW | 982 kg CO2e | Avg emissions | $1,233 | round trip"
+    },
+    "cx843": {
+      "price": 2635,
+      "details": "1:55 AM |  –  | 11:05 AM+1 | Cathay Pacific | 21 hr 10 min | JFK–PVG | 1 stop | 2 hr 40 min HKG | 1,059 kg CO2e | +13% emissions | $2,635 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 316"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-08-22",
+    "return": "2026-09-13",
+    "cheapest": {
+      "price": 1091,
+      "details": "2:00 AM |  –  | 10:05 AM+1 | Asiana Airlines | 20 hr 5 min | JFK–PVG | 1 stop | 2 hr 55 min ICN | 1,036 kg CO2e | +10% emissions | $1,091 | round trip"
+    },
+    "cx843": {
+      "price": 1328,
+      "details": "1:55 AM |  –  | 1:15 PM+1 | Cathay Pacific | 23 hr 20 min | JFK–PVG | 1 stop | 4 hr 55 min HKG | 1,034 kg CO2e | +10% emissions | $1,328 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 376"
+      ]
+    }
+  },
+  {
+    "outbound": "2026-08-29",
+    "return": "2026-09-20",
+    "cheapest": {
+      "price": 1076,
+      "details": "2:00 AM |  –  | 10:05 AM+1 | Asiana Airlines | 20 hr 5 min | JFK–PVG | 1 stop | 2 hr 55 min ICN | 1,036 kg CO2e | +10% emissions | $1,076 | round trip"
+    },
+    "cx843": {
+      "price": 1278,
+      "details": "1:55 AM |  –  | 11:05 AM+1 | Cathay Pacific | 21 hr 10 min | JFK–PVG | 1 stop | 2 hr 40 min HKG | 1,059 kg CO2e | +13% emissions | $1,278 | round trip",
+      "flightNums": [
+        "CX 843",
+        "CX 316"
+      ]
+    }
   }
 ]

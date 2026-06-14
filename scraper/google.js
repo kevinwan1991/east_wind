@@ -23,16 +23,20 @@ function loadCookies() {
     const sameSiteMap = { no_restriction: 'None', lax: 'Lax', strict: 'Strict' };
     return raw
       .filter(c => c.name && c.value)
-      .map(c => ({
-        name:     c.name,
-        value:    c.value,
-        domain:   c.domain,
-        path:     c.path || '/',
-        expires:  c.expires ?? c.expirationDate ?? c.expiry ?? -1,
-        httpOnly: c.httpOnly ?? false,
-        secure:   c.secure ?? false,
-        sameSite: sameSiteMap[(c.sameSite || '').toLowerCase()] ?? 'Lax',
-      }));
+      .map(c => {
+        const sameSite = sameSiteMap[(c.sameSite || '').toLowerCase()] ?? 'Lax';
+        const secure   = sameSite === 'None' ? true : (c.secure ?? false);
+        return {
+          name:     c.name,
+          value:    c.value,
+          domain:   c.domain,
+          path:     c.path || '/',
+          expires:  c.expires ?? c.expirationDate ?? c.expiry ?? -1,
+          httpOnly: c.httpOnly ?? false,
+          secure,
+          sameSite,
+        };
+      });
   } catch (e) {
     console.warn(`  [cookies] failed to load ${COOKIE_FILE}:`, e.message);
     return [];
@@ -399,7 +403,9 @@ async function makeContext(index) {
   await ctx.addInitScript(() => {
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
   });
-  if (SAVED_COOKIES.length > 0) await ctx.addCookies(SAVED_COOKIES);
+  for (const c of SAVED_COOKIES) {
+    await ctx.addCookies([c]).catch(() => {});
+  }
   return ctx;
 }
 
